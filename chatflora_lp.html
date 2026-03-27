@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>chatFLORA G｜あなた専用の腸活を、科学で見つける</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700;900&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --mint:    #3ecfb2;
+    --mint-d:  #28a99a;
+    --teal:    #0d7b70;
+    --cream:   #faf8f4;
+    --sand:    #f0ebe0;
+    --charcoal:#1e2a2a;
+    --muted:   #5a6e6d;
+    --accent:  #ff6b4a;
+    --accent-d:#e05030;
+    --gold:    #c8a96a;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    overflow-x: hidden;
+  }
+
+  /* ─── Hero fade-in ─────────────────────────── */
+  #hero { animation: heroFade 1.5s ease forwards; opacity: 0; }
+  @keyframes heroFade { to { opacity: 1; } }
+
+  /* ─── Blob background ──────────────────────── */
+  .blob-bg {
+    position: absolute; inset: 0; overflow: hidden; z-index: 0;
+  }
+  .blob {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); opacity: .25;
+  }
+  .blob-1 { width: 500px; height: 500px; background: var(--mint); top: -120px; right: -120px; }
+  .blob-2 { width: 350px; height: 350px; background: #7de8d4; bottom: 0; left: -60px; }
+
+  /* ─── Gradient text ────────────────────────── */
+  .grad-text {
+    background: linear-gradient(135deg, var(--teal), var(--mint));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ─── CTA Button ───────────────────────────── */
+  .btn-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent), var(--accent-d));
+    color: #fff;
+    font-weight: 700;
+    border-radius: 9999px;
+    padding: 1rem 2.4rem;
+    font-size: 1.05rem;
+    letter-spacing: .05em;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 8px 30px rgba(255,107,74,.4);
+    text-align: center;
+  }
+  .btn-cta:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(255,107,74,.5); }
+  .btn-cta-sub {
+    display: inline-block;
+    background: var(--teal);
+    color: #fff;
+    font-weight: 700;
+    border-radius: 9999px;
+    padding: .85rem 2.2rem;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: transform .2s, box-shadow .2s;
+    box-shadow: 0 6px 20px rgba(13,123,112,.3);
+    text-align: center;
+  }
+  .btn-cta-sub:hover { transform: translateY(-2px); box-shadow: 0 12px 28px rgba(13,123,112,.4); }
+
+  /* ─── Section base ─────────────────────────── */
+  section { position: relative; overflow: hidden; }
+  .section-tag {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--mint), var(--teal));
+    color: #fff;
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .12em;
+    padding: .28rem .9rem;
+    border-radius: 9999px;
+    margin-bottom: .8rem;
+  }
+
+  /* ─── Card ─────────────────────────────────── */
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,.07);
+    padding: 1.6rem;
+    transition: transform .25s, box-shadow .25s;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,.11); }
+
+  /* ─── Check list ───────────────────────────── */
+  .check-item { display: flex; align-items: flex-start; gap: .7rem; margin-bottom: .75rem; }
+  .check-icon { width: 22px; height: 22px; min-width: 22px; border-radius: 50%; background: var(--mint); display: flex; align-items: center; justify-content: center; margin-top: 2px; }
+  .check-icon svg { width: 12px; height: 12px; }
+
+  /* ─── Step ─────────────────────────────────── */
+  .step-num {
+    width: 54px; height: 54px; min-width: 54px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--mint), var(--teal));
+    color: #fff; font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.35rem;
+    box-shadow: 0 6px 18px rgba(62,207,178,.35);
+  }
+
+  /* ─── Concern chip ─────────────────────────── */
+  .concern-chip {
+    display: inline-block;
+    background: #fff5f2;
+    border: 1.5px solid #ffcab8;
+    border-radius: 9999px;
+    padding: .45rem 1rem;
+    font-size: .88rem;
+    color: var(--accent-d);
+    font-weight: 500;
+    margin: .3rem;
+  }
+
+  /* ─── Category badge ────────────────────────── */
+  .cat-badge {
+    background: linear-gradient(135deg, #edfaf7, #d4f5ef);
+    border: 1.5px solid #a3e9df;
+    border-radius: 14px;
+    padding: 1rem 1.1rem;
+    text-align: center;
+    font-weight: 700;
+    font-size: .85rem;
+    color: var(--teal);
+  }
+
+  /* ─── FAQ accordion ────────────────────────── */
+  details { border-radius: 14px; background: #fff; margin-bottom: .8rem; box-shadow: 0 2px 12px rgba(0,0,0,.06); overflow: hidden; }
+  details summary {
+    cursor: pointer;
+    padding: 1.1rem 1.4rem;
+    font-weight: 600;
+    list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: .95rem;
+  }
+  details summary::-webkit-details-marker { display: none; }
+  details summary::after { content: '+'; font-size: 1.4rem; color: var(--mint); font-weight: 300; transition: transform .2s; }
+  details[open] summary::after { content: '−'; }
+  details .faq-body { padding: 0 1.4rem 1.1rem; color: var(--muted); font-size: .9rem; line-height: 1.8; }
+
+  /* ─── Proof box ────────────────────────────── */
+  .proof-box {
+    background: linear-gradient(135deg, var(--teal), var(--mint-d));
+    border-radius: 20px;
+    color: #fff;
+    padding: 1.6rem 1.4rem;
+    text-align: center;
+  }
+
+  /* ─── Divider wave ─────────────────────────── */
+  .wave-divider svg { display: block; width: 100%; }
+
+  /* ─── Sticky bottom CTA ────────────────────── */
+  #sticky-cta {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    z-index: 50;
+    background: rgba(255,255,255,.95);
+    backdrop-filter: blur(12px);
+    border-top: 1px solid #e8e8e8;
+    padding: .85rem 1rem;
+    display: flex; justify-content: center;
+    transform: translateY(100%);
+    transition: transform .4s ease;
+  }
+  #sticky-cta.show { transform: translateY(0); }
+
+  /* ─── Quote ────────────────────────────────── */
+  .user-quote {
+    background: #fff;
+    border-left: 4px solid var(--mint);
+    border-radius: 0 16px 16px 0;
+    padding: 1.2rem 1.4rem;
+    font-size: .9rem;
+    line-height: 1.8;
+    color: var(--charcoal);
+    box-shadow: 0 2px 14px rgba(0,0,0,.06);
+    margin-bottom: 1rem;
+  }
+  .quote-name { font-size: .78rem; color: var(--muted); margin-top: .5rem; }
+
+  /* ─── Notice ───────────────────────────────── */
+  .notice { font-size: .72rem; color: var(--muted); line-height: 1.7; }
+
+  /* ─── Scroll reveal ────────────────────────── */
+  .reveal { opacity: 0; transform: translateY(32px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ─── Responsive headline ──────────────────── */
+  .hero-title { font-size: clamp(1.8rem, 7vw, 3rem); }
+  .sec-title { font-size: clamp(1.4rem, 5vw, 2.1rem); }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════ -->
+<section id="hero" class="relative min-h-screen flex flex-col justify-center px-5 pt-16 pb-20" style="background:linear-gradient(160deg,#0d4f49 0%,#165e55 40%,#1d7068 100%);">
+  <div class="blob-bg">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+  <div class="relative z-10 max-w-lg mx-auto w-full text-center">
+    <!-- Logo badge -->
+    <div class="inline-flex items-center gap-2 bg-white/15 backdrop-blur rounded-full px-4 py-2 mb-6">
+      <span class="text-xs font-bold text-white/90 tracking-widest uppercase">chatFLORA G</span>
+      <span class="text-xs bg-white/20 rounded-full px-2 py-0.5 text-white/80">第3世代解析</span>
+    </div>
+
+    <h1 class="hero-title font-black text-white leading-tight mb-4">
+      頑張ってるのに<br>
+      <span style="color:#7de8d4;">痩せない。</span><br>
+      原因は<span style="color:#7de8d4;">「腸」</span>にあった。
+    </h1>
+    <p class="text-white/75 text-sm leading-relaxed mb-3 px-2">
+      食事制限も、ヨーグルトも、全部やった。<br>
+      でも変わらないのは、あなたの<strong class="text-white">腸内フローラに合っていない</strong>からかもしれません。
+    </p>
+    <p class="text-white/60 text-xs mb-8 px-4">
+      腸内細菌を"種レベル"まで解析する最先端キットで、<br>
+      あなた専用の腸活の答えが見つかります。
+    </p>
+
+    <a href="https://px.a8.net/svt/ejp?a8mat=4AZPON+FAQ04A+5F1O+HW2Q9" class="btn-cta block w-full max-w-xs mx-auto mb-3">
+      🔬 自分の腸をチェックする
+    </a>
+    <p class="text-white/50 text-xs">自宅で簡単 ・ 郵送するだけ ・ 完全非対面</p>
+
+    <!-- Proof numbers -->
+    <div class="flex justify-center gap-6 mt-8 pt-6 border-t border-white/15">
+      <div class="text-center">
+        <div class="text-2xl font-black text-white">190<span class="text-base text-[#7de8d4]">%</span></div>
+        <div class="text-xs text-white/50">CF達成率</div>
+      </div>
+      <div class="w-px bg-white/15"></div>
+      <div class="text-center">
+        <div class="text-2xl font-black text-white">3<span class="text-base text-[#7de8d4]">時間</span></div>
+        <div class="text-xs text-white/50">1,800個完売</div>
+      </div>
+      <div class="w-px bg-white/15"></div>
+      <div class="text-center">
+        <div class="text-2xl font-black text-white">39<span class="text-base text-[#7de8d4]">項目</span></div>
+        <div class="text-xs text-white/50">7カテゴリー</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     CONCERN CHECK
+══════════════════════════════════════════════════ -->
+<section class="py-14 px-5" style="background:var(--sand);">
+  <div class="max-w-lg mx-auto reveal">
+    <div class="section-tag">こんな悩み、ありませんか？</div>
+    <h2 class="sec-title font-black mb-6 leading-snug">
+      もしかして<br>
+      <span class="grad-text">あなたの腸活、ズレてます</span>
+    </h2>
+
+    <div class="flex flex-wrap mb-8">
+      <span class="concern-chip">😩 食事制限しても痩せない</span>
+      <span class="concern-chip">🥗 ヨーグルト・納豆を続けてる</span>
+      <span class="concern-chip">💤 睡眠の質が悪い</span>
+      <span class="concern-chip">😟 メンタルが不安定</span>
+      <span class="concern-chip">👶 産後、体型が戻らない</span>
+      <span class="concern-chip">😵 腸活で何をすればいいかわからない</span>
+      <span class="concern-chip">💸 サプリを試しても効果なし</span>
+      <span class="concern-chip">🤔 肌荒れ・アレルギーが気になる</span>
+    </div>
+
+    <div class="card" style="background:linear-gradient(135deg,#fff9f7,#fff5f0); border:1.5px solid #ffd4c4;">
+      <p class="font-bold text-[var(--accent-d)] text-sm mb-2">⚠️ それ、方法が間違っているのではなく</p>
+      <p class="font-black text-[var(--charcoal)] text-lg leading-snug">
+        「あなたの腸内菌に合っていない」<br>だけかもしれません。
+      </p>
+      <p class="text-sm text-[var(--muted)] mt-3 leading-relaxed">
+        腸内フローラは人それぞれ異なります。同じ属の菌でも「種」が違えば働きは正反対。<br>
+        一般的に「良い」とされる食品が、あなたには逆効果のこともあります。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- wave -->
+<div class="wave-divider" style="background:var(--sand); margin-bottom:-2px;">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z" fill="var(--cream)"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SOLUTION
+══════════════════════════════════════════════════ -->
+<section class="py-14 px-5" style="background:var(--cream);">
+  <div class="max-w-lg mx-auto reveal">
+    <div class="section-tag">解決策</div>
+    <h2 class="sec-title font-black mb-2 leading-snug">
+      <span class="grad-text">腸内フローラ</span>を<br>
+      "種レベル"で解析。
+    </h2>
+    <p class="text-[var(--muted)] text-sm leading-relaxed mb-8">
+      chatFLORA Gは、多くの市販キットが採用している第2世代解析ではなく、最先端の<strong class="text-[var(--charcoal)]">第3世代解析技術</strong>を採用。<br>
+      従来では見逃していた「レア菌」「痩せ菌」まで正確に検出します。
+    </p>
+
+    <!-- Compare cards -->
+    <div class="grid grid-cols-2 gap-3 mb-8">
+      <div class="card" style="border:1.5px solid #e0e0e0; opacity:.75;">
+        <div class="text-xs font-bold text-gray-400 mb-2">従来の第2世代</div>
+        <ul class="text-xs text-gray-500 space-y-1.5">
+          <li>✗ 「属」レベルの大まかな解析</li>
+          <li>✗ レア菌の見逃しが多い</li>
+          <li>✗ 一般的なアドバイスのみ</li>
+        </ul>
+      </div>
+      <div class="card" style="border:2px solid var(--mint); background:linear-gradient(135deg,#f0fffd,#e6faf7);">
+        <div class="text-xs font-bold text-[var(--teal)] mb-2">chatFLORA G 第3世代 ✨</div>
+        <ul class="text-xs text-[var(--charcoal)] space-y-1.5">
+          <li>✅ 「種」レベルの高精度解析</li>
+          <li>✅ レア菌・痩せ菌3種を検出</li>
+          <li>✅ 食事データと組み合わせた<br>　パーソナライズ提案</li>
+        </ul>
+      </div>
+    </div>
+
+    <a href="https://px.a8.net/svt/ejp?a8mat=4AZPON+FAQ04A+5F1O+HW2Q9" class="btn-cta block w-full text-center mb-2">
+      🌿 今すぐ自分の腸を知る
+    </a>
+    <p class="text-center text-xs text-[var(--muted)]">送料・返送料 無料</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     7 CATEGORIES
+══════════════════════════════════════════════════ -->
+<section class="py-14 px-5" style="background:#f4fbfa;">
+  <div class="max-w-lg mx-auto reveal">
+    <div class="section-tag">検査内容</div>
+    <h2 class="sec-title font-black mb-2 leading-snug">
+      <span class="grad-text">7カテゴリー・39項目</span><br>
+      あなたの体質をまるごと解析
+    </h2>
+    <p class="text-[var(--muted)] text-sm mb-7 leading-relaxed">
+      ダイエットだけじゃない。眠れない夜、気分の波、アレルギー…<br>
+      体の悩みの多くは「腸」が関係しています。
+    </p>
+
+    <div class="grid grid-cols-2 gap-3 mb-4">
+      <div class="cat-badge">🔥 ダイエット<br><span class="text-xs font-normal text-[var(--muted)]">痩せ菌3種含む</span></div>
+      <div class="cat-badge">😴 睡眠<br><span class="text-xs font-normal text-[var(--muted)]">睡眠の質に関わる菌</span></div>
+      <div class="cat-badge">🧠 メンタルヘルス<br><span class="text-xs font-normal text-[var(--muted)]">セロトニン関連菌</span></div>
+      <div class="cat-badge">🌸 エクオール<br><span class="text-xs font-normal text-[var(--muted)]">女性ホルモン関連</span></div>
+      <div class="cat-badge">🛡️ アレルギー<br><span class="text-xs font-normal text-[var(--muted)]">免疫・炎症系菌</span></div>
+      <div class="cat-badge">💊 栄養素<br><span class="text-xs font-normal text-[var(--muted)]">ビタミン産生能力</span></div>
+    </div>
+    <div class="cat-badge w-full text-center">🩺 未病・予防<br><span class="text-xs font-normal text-[var(--muted)]">疾患リスク傾向</span></div>
+
+    <div class="mt-6 p-4 rounded-2xl" style="background:linear-gradient(135deg,#fff9f0,#fff4e6); border:1.5px solid #f5d9a8;">
+      <p class="text-xs font-bold text-[var(--gold)] mb-1">💡 食事アンケートとの掛け合わせ</p>
+      <p class="text-sm text-[var(--charcoal)] leading-relaxed">
+        検査結果＋あなたの食生活データを独自アルゴリズムで分析。<br>
+        「<strong>何を食べれば良いか</strong>」まで具体的な食材・栄養素でアドバイスします。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- wave -->
+<div class="wave-divider" style="background:#f4fbfa; margin-bottom:-2px;">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,20 C360,50 1080,0 1440,40 L1440,60 L0,60 Z" fill="var(--cream)"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     HOW IT WORKS
+══════════════════════════════════════════════════ -->
+<section class="py-14 px-5" style="background:var(--cream);">
+  <div class="max-w-lg mx-auto reveal">
+    <div class="section-tag">使い方</div>
+    <h2 class="sec-title font-black mb-2 leading-snug">
+      自宅で<span class="grad-text">たった3ステップ</span>
+    </h2>
+    <p class="text-[var(--muted)] text-sm mb-8">クリニックに行く必要も、面倒な手続きもなし。</p>
+
+    <div class="space-y-5">
+      <!-- step 1 -->
+      <div class="flex gap-4 items-start">
+        <div class="step-num">1</div>
+        <div class="card flex-1">
+          <div class="text-xs font-bold text-[var(--mint-d)] mb-1">📦 キットが届く</div>
+          <div class="font-bold text-[var(--charcoal)] mb-1">自宅に専用キットをお届け</div>
+          <p class="text-xs text-[var(--muted)] leading-relaxed">わかりやすい説明書と採便容器が入っています。送料は<strong>無料</strong>。</p>
+        </div>
+      </div>
+      <!-- step 2 -->
+      <div class="flex gap-4 items-start">
+        <div class="step-num">2</div>
+        <div class="card flex-1">
+          <div class="text-xs font-bold text-[var(--mint-d)] mb-1">🧪 採便してポストへ</div>
+          <div class="font-bold text-[var(--charcoal)] mb-1">専用シートで簡単採取→郵送</div>
+          <p class="text-xs text-[var(--muted)] leading-relaxed">専用の採便シートでサンプル採取。同封の封筒でポストに投函するだけ。<strong>返送料も無料</strong>。</p>
+        </div>
+      </div>
+      <!-- step 3 -->
+      <div class="flex gap-4 items-start">
+        <div class="step-num">3</div>
+        <div class="card flex-1">
+          <div class="text-xs font-bold text-[var(--mint-d)] mb-1">📱 WEBでレポート確認</div>
+          <div class="font-bold text-[var(--charcoal)] mb-1">スコアと改善アドバイスがわかる</div>
+          <p class="text-xs text-[var(--muted)] leading-relaxed">数日後、専用ページでスコア化されたレポートを閲覧。食事アンケートと組み合わせて<strong>あなた専用の腸活プラン</strong>が提示されます。</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-8 p-4 rounded-2xl text-center" style="background:#e8f8f5; border:1.5px dashed var(--mint);">
+      <p class="text-sm font-bold text-[var(--teal)]">✅ 完全非対面・自宅完結</p>
+      <p class="text-xs text-[var(--muted)] mt-1">忙しい方・外出が難しい方でも無理なく始められます</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     PROOF / TRUST
+══════════════════════════════════════════════════ -->
+<section class="py-14 px-5" style="background:var(--sand);">
+  <div class="max-w-lg mx-auto reveal">
+    <div class="section-tag">信頼の証明</div>
+    <h2 class="sec-title font-black mb-6 leading-snug">
+      発売前から<span class="grad-text">注目が止まらない</span>
+    </h2>
+
+    <div class="grid grid-cols-2 gap-3 mb-7">
+      <div class="proof-box">
+        <div class="text-3xl font-black">190<span class="text-lg">%</span></div>
+        <div class="text-xs opacity-80 mt-1">クラウドファンディング<br>目標達成率</div>
+      </div>
+      <div class="proof-box">
+        <div class="text-3xl font-black">3<span class="text-lg">時間</span></div>
+        <div class="text-xs opacity-80 mt-1">テスト販売で<br>1,800個完売</div>
+      </div>
+    </div>
+
+    <!-- User review -->
+    <h3 class="font-bold text-sm mb-3 text-[var(--charcoal)]">📣 ご利用者の声</h3>
+
+    <div class="user-quote">
+      <p>「ダイエット目的で検査しました。痩せ菌の<strong>アッカーマンシア菌がほとんどいない</strong>ことが判明。セロトニン関連スコアも低くて、不調の原因が全部腸にあったとわかってスッキリ！具体的なおすすめ食材が書かれていたので、さっそく試しています。」</p>
+      <div class="quote-name">30代女性 / ダイエット目的でご利用</div>
+    </div>
+
+    <div class="user-quote">
+      <p>「腸活してるつもりだったけど、自分の菌に合ってなかったとは…。レポートが具体的で、<strong>何を食べればいいかがはっきりわかった</strong>のが一番よかったです。」</p>
+      <div class="quote-name">40代女性 / 体質改善目的でご利用</div>
+    </div>
+
+    <p class="notice mt-2">※個人の感想であり、効果・効能を保証するものではありません。</p>
+  </div>
+</section>
+
+<!-- wave -->
+<div class="wave-divider" style="background:var(--sand); margin-bottom:-2px;">
+  <svg viewBox="0 0 1440 60" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,40 C400,10 1000,60 1440,20 L1440,60 L0,60 Z" fill="var(--cream)"/>
+  </svg>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     BENEFITS SUMMARY
+══════════════════════════════════════════════════ -->
+<section class="py-14 px-5" style="background:var(--cream);">
+  <div class="max-w-lg mx-auto reveal">
+    <div class="section-tag">あなたが得られること</div>
+    <h2 class="sec-title font-black mb-7 leading-snug">
+      <span class="grad-text">無駄な努力</span>に<br>
+      さよならする日
+    </h2>
+
+    <div class="space-y-3">
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <p class="text-sm leading-relaxed"><strong>「なぜ痩せないか」の答え</strong>が腸レベルでわかる</p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <p class="text-sm leading-relaxed"><strong>自分専用の食材・栄養素</strong>を提案してもらえる</p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <p class="text-sm leading-relaxed">睡眠・メンタル・アレルギーまで<strong>7領域を一括把握</strong></p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <p class="text-sm leading-relaxed">スコア数値で<strong>腸活の進捗を可視化</strong>・モチベ継続</p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <p class="text-sm leading-relaxed">エクオール産生菌の有無で<strong>女性ホルモン系の状態</strong>も把握</p>
+      </div>
+      <div class="check-item">
+        <div class="check-icon"><svg viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#fff" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <p class="text-sm leading-relaxed">自宅で完結・非対面なので<strong>忙しくても続けられる</strong></p>
+      </div>
+    </div>
+
+    <div class="mt-8">
+      <a href="https://px.a8.net/svt/ejp?a8mat=4AZPON+FAQ04A+5F1O+HW2Q9" class="btn-cta block w-full text-center">
+        🔬 自分の腸内フローラを調べる
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FAQ
+══════════════════════════════════════════════════ -->
+<section class="py-14 px-5" style="background:#f4fbfa;">
+  <div class="max-w-lg mx-auto reveal">
+    <div class="section-tag">よくある質問</div>
+    <h2 class="sec-title font-black mb-7 leading-snug">
+      不安を<span class="grad-text">全部解決</span>します
+    </h2>
+
+    <details>
+      <summary>痛みはありますか？採便は難しい？</summary>
+      <div class="faq-body">採便シートや綿棒を使った簡単な方法です。痛みはまったくありません。付属の説明書に沿って数分で完了します。</div>
+    </details>
+
+    <details>
+      <summary>結果はどれくらいで届きますか？</summary>
+      <div class="faq-body">採便キットを返送後、数日でWEB上のレポートページでスコア化された検査結果を確認できます。紙での郵送レポートはありません。</div>
+    </details>
+
+    <details>
+      <summary>他の腸内フローラ検査と何が違うの？</summary>
+      <div class="faq-body">多くの市販キットが採用する第2世代解析（16S rRNA一部領域）では「属レベル」の解析にとどまります。chatFLORA Gは最先端の第3世代解析により「種レベル」まで解析。従来では見逃されていたレア菌・痩せ菌3種も高精度で検出できます。</div>
+    </details>
+
+    <details>
+      <summary>服薬中でも検査できますか？</summary>
+      <div class="faq-body">日常的なお薬・サプリメントは服用したまま検査いただけます。ただし抗生物質を服用中の場合は、服用終了後2週間以上空けてからの検査を推奨しています。</div>
+    </details>
+
+    <details>
+      <summary>個人情報・プライバシーは守られますか？</summary>
+      <div class="faq-body">個人情報保護法および関連法令を遵守して管理されています。検査結果レポートは専用アカウントのみで閲覧可能です。</div>
+    </details>
+
+    <details>
+      <summary>何歳から利用できますか？</summary>
+      <div class="faq-body">年齢制限はありません。ただし成人用データベースとの比較を前提としているため、5歳以下のお子様の検査は推奨していません。</div>
+    </details>
+
+    <details>
+      <summary>効果がなかったら？意味あるの？</summary>
+      <div class="faq-body">chatFLORA Gはあくまで「現在の腸内フローラを知るための検査」です。結果をもとに食生活を改善することで、最短1ヶ月で腸内細菌叢に変化が見られることもあります。定期的に検査することでスコアの推移を確認でき、改善の実感を数値で確かめられます。</div>
+    </details>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     FINAL CTA
+══════════════════════════════════════════════════ -->
+<section class="py-16 px-5 text-center" style="background:linear-gradient(160deg,#0d4f49 0%,#1d7068 100%);">
+  <div class="max-w-lg mx-auto reveal">
+    <p class="text-[#7de8d4] text-xs font-bold tracking-widest mb-3 uppercase">chatFLORA G</p>
+    <h2 class="text-white font-black text-2xl leading-snug mb-4">
+      今日から始める、<br>
+      <span style="color:#7de8d4;">あなた専用の腸活。</span>
+    </h2>
+    <p class="text-white/65 text-sm leading-relaxed mb-8 px-3">
+      闇雲な腸活はもう終わりにしましょう。<br>
+      第3世代解析で「あなたの腸に合った答え」を見つけてください。
+    </p>
+
+    <a href="https://px.a8.net/svt/ejp?a8mat=4AZPON+FAQ04A+5F1O+HW2Q9" class="btn-cta block w-full max-w-xs mx-auto mb-4">
+      🌿 今すぐチェックする
+    </a>
+    <a href="https://px.a8.net/svt/ejp?a8mat=4AZPON+FAQ04A+5F1O+HW2Q9" class="btn-cta-sub block w-full max-w-xs mx-auto mb-5">
+      詳しく見る →
+    </a>
+
+    <div class="flex flex-wrap justify-center gap-3 text-xs text-white/50">
+      <span>✅ 送料・返送料 無料</span>
+      <span>✅ 自宅完結</span>
+      <span>✅ 完全非対面</span>
+      <span>✅ 結果WEB確認</span>
+    </div>
+
+    <p class="notice text-white/35 mt-6 px-2">
+      本サービスは法令に基づく医療・診療行為ではありません。検査結果は疾患の確定診断を行うものではありません。気になる症状がある場合は医療機関を受診ください。
+    </p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     STICKY CTA
+══════════════════════════════════════════════════ -->
+<div id="sticky-cta">
+  <a href="https://px.a8.net/svt/ejp?a8mat=4AZPON+FAQ04A+5F1O+HW2Q9" class="btn-cta w-full max-w-sm">
+    🔬 自分の腸内フローラを調べる
+  </a>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     JS
+══════════════════════════════════════════════════ -->
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Sticky CTA
+  const stickyCta = document.getElementById('sticky-cta');
+  window.addEventListener('scroll', () => {
+    stickyCta.classList.toggle('show', window.scrollY > 500);
+  });
+</script>
+
+</body>
+</html>
